@@ -8,7 +8,8 @@
 		"lint": "eslint --ext .js,.ts .",
 		"format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
 		"test": "jest",
-		"test:coverage": "jest --coverage"
+		"test:coverage": "jest --coverage",
+		"test:staged": "npm test -- --findRelatedTests --watchAll=false"
 	},
 	"repository": {
 		"type": "git",

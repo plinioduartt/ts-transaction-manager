@@ -1,5 +1,5 @@
 import { DefaultSwaggerDocument, IOpenapiVersions } from "../../src/commons"
-import { Document } from "../../src/openapi"
+import { Document } from "../../src/document"
 
 describe('Document class tests', () => {
 	test('It should retrieve the default Swagger Document', () => {
