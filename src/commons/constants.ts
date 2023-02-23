@@ -3,7 +3,7 @@ export interface ISwaggerDocument {
   [key: string]: any // TODO: Fix type
 }
 export enum IOpenapiVersions {
-  '3.0.0',
+  '3.0.0'
 }
 const OpenapiVersion = '3.0.0'
 export const DefaultSwaggerDocument = {

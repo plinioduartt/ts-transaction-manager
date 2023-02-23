@@ -1,18 +1,18 @@
 {
-	"compilerOptions": {
-		"target": "es2016",
-		"module": "commonjs",
-		"esModuleInterop": true,
-		"strict": true,
-		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
-		"forceConsistentCasingInFileNames": true,
-		"resolveJsonModule": true,
-		"outDir": "./dist",
-		"rootDir": ".",
-		"sourceRoot": "./src",
-		"sourceMap": true,
-		"baseUrl": ".",
-		"moduleResolution": "node"
-	}
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "strict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "outDir": "./dist",
+    "rootDir": ".",
+    "sourceRoot": "./src",
+    "sourceMap": true,
+    "baseUrl": ".",
+    "moduleResolution": "node"
+  }
 }
