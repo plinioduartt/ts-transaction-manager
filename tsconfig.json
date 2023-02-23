@@ -8,6 +8,11 @@
 		"emitDecoratorMetadata": true,
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
-
+		"outDir": "./dist",
+		"rootDir": ".",
+		"sourceRoot": "./src",
+		"sourceMap": true,
+		"baseUrl": ".",
+		"moduleResolution": "node",
   }
 }
