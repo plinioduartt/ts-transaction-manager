@@ -10,7 +10,8 @@
 		"format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
 		"test": "npx jest --passWithNoTests  --runInBand --detectOpenHandles",
 		"test:coverage": "jest --coverage",
-		"test:staged": "npm test -- --findRelatedTests --watchAll=false"
+		"test:staged": "npm test -- --findRelatedTests --watchAll=false",
+		"test:ci": "npm test -- --silent --coverage"
 	},
 	"repository": {
 		"type": "git",
