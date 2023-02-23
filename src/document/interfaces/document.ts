@@ -1,4 +1,4 @@
-import { IOpenapiVersions } from "../../commons"
+import { IOpenapiVersions } from '../../commons'
 
 export interface IDocument {
   retrieveDocument: () => any // TODO: Fix type

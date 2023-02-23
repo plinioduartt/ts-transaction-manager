@@ -6,12 +6,14 @@
 	"scripts": {
 		"build": "rimraf ./dist && tsc -p ./tsconfig.json",
 		"dev": "tsc --watch",
-		"lint": "eslint --ext .js,.ts .",
-		"format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+		"typecheck": "npx tsc .js,.ts . --noEmit",
+		"lint": "npx eslint --ext .js,.ts .",
+		"format": "npx prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
 		"test": "npx jest --passWithNoTests  --runInBand --detectOpenHandles",
 		"test:coverage": "jest --coverage",
 		"test:staged": "npm test -- --findRelatedTests --watchAll=false",
-		"test:ci": "npm test -- --silent --coverage"
+		"test:pre-push": "npm test -- --silent --coverage",
+		"test:ci": "npm run format && npm run lint && npm run test:pre-push"
 	},
 	"repository": {
 		"type": "git",

@@ -1,9 +1,15 @@
 {
-    "extends": "standard-with-typescript",
-    "parserOptions": {
-        "project": "./tsconfig.json"
-    },
-    "rules": {
-        "@typescript-eslint/eslint-disable accessor-pairs": "off",
-    }
+	"extends": "standard-with-typescript",
+	"parserOptions": {
+		"project": "./tsconfig.json"
+	},
+	"rules": {
+		"@typescript-eslint/eslint-disable accessor-pairs": "off",
+		"no-tabs": [
+			"error",
+			{
+				"allowIndentationTabs": true
+			}
+		]
+	}
 }
