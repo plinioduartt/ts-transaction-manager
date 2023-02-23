@@ -1,0 +1,9 @@
+{
+    "extends": "standard-with-typescript",
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        "@typescript-eslint/eslint-disable accessor-pairs": "off",
+    }
+}
