@@ -7,7 +7,7 @@ export class TransactionManager implements ITransactionManager {
   private _defaultDataSource: GenericDataSource
   private static _instance: TransactionManager | undefined
 
-  // private constructor() {}
+  private constructor() {}
 
   public addDataSource(
     dataSource: Exclude<GenericDataSource, undefined>

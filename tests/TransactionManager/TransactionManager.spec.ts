@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { GenericDataSource, ITransactionManager, TransactionManager, InvalidDataSourceError } from '../../src/TransactionManager'
 import { DataSource, DataSourceOptions } from 'typeorm'
 import { createMock } from 'ts-auto-mock'
@@ -22,7 +23,7 @@ describe('TransactionManager', () => {
 
   test('Add unique data sources', () => {
     // arrange
-    const sut: TransactionManager = new TransactionManager()
+    const sut: TransactionManager = Reflect.construct(TransactionManager, [])
     const spyAddDataSource: jest.SpyInstance<ITransactionManager, [dataSource: DataSource], any> =
 			jest.spyOn(sut, 'addDataSource')
 
@@ -39,7 +40,7 @@ describe('TransactionManager', () => {
 
   test('Set default data source', () => {
     // arrange
-    const sut: TransactionManager = new TransactionManager()
+    const sut: TransactionManager = Reflect.construct(TransactionManager, [])
     const spySetDefaultDataSource = jest.spyOn(sut, 'setDefaultDataSource')
 
     // act
@@ -54,7 +55,7 @@ describe('TransactionManager', () => {
 
   test('Set default data source with invalid data source', () => {
     // arrange
-    const sut: TransactionManager = new TransactionManager()
+    const sut: TransactionManager = Reflect.construct(TransactionManager, [])
     const spySetDefaultDataSource = jest.spyOn(sut, 'setDefaultDataSource')
     const mockedInvalidDataSource: any = createMock<any>()
 
@@ -74,7 +75,7 @@ describe('TransactionManager', () => {
 
   test('Get default data source', () => {
     // arrange
-    const sut: TransactionManager = new TransactionManager()
+    const sut: TransactionManager = Reflect.construct(TransactionManager, [])
     sut
       .addDataSource(mockedTypeormDataSource)
       .setDefaultDataSource(mockedTypeormDataSource)
@@ -88,7 +89,7 @@ describe('TransactionManager', () => {
 
   test('Validate isTypeormDataSource polymorphism', () => {
     // arrange
-    const sut: TransactionManager = new TransactionManager()
+    const sut: TransactionManager = Reflect.construct(TransactionManager, [])
     const mockedOptions: DataSourceOptions = createMock<DataSourceOptions>()
     const test: DataSource = new DataSource(mockedOptions)
 
