@@ -13,6 +13,12 @@
     "sourceRoot": "./src",
     "sourceMap": true,
     "baseUrl": ".",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "plugins": [
+      {
+        "transform": "ts-auto-mock/transformer",
+        "cacheBetweenTests": false
+      }
+    ]
   }
 }

@@ -19,10 +19,15 @@ const config: Config.InitialOptions = {
     global: {
       branches: 100,
       functions: 100,
-      lines: 100
+      lines: 100,
+      statements: 100
     }
   },
-  setupFilesAfterEnv: []
+  globals: {
+    'ts-jest': {
+      compiler: 'ttypescript'
+    }
+  }
 }
 
 export default config
