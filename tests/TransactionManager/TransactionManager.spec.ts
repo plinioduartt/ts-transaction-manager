@@ -1,7 +1,5 @@
 import 'reflect-metadata'
-import {
-  TransactionManager
-} from '../../src'
+import { TransactionManager } from '../../src'
 import { DataSource, DataSourceOptions } from 'typeorm'
 import { createMock } from 'ts-auto-mock'
 import { InvalidDataSourceError } from '../../src/errors'

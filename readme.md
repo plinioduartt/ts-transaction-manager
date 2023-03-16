@@ -12,7 +12,7 @@
 Configuration:
 ```
 import { DataSource } from 'typeorm'
-import { TransactionManager } from 'ts-transaction-manager'
+import { TransactionManager } from '@plinioduartt/ts-transaction-manager'
 
 const dataSource = new DataSource({
 	...options
@@ -29,6 +29,8 @@ TransactionManager
 
 Example of use:
 ```
+import { Transactional } from '@plinioduartt/ts-transaction-manager'
+
 class Example1 {
 
 	@Transactional()

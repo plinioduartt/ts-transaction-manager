@@ -2,11 +2,7 @@
 import 'reflect-metadata'
 import { createMock } from 'ts-auto-mock'
 import { DataSource, DataSourceOptions } from 'typeorm'
-import {
-  Transactional,
-  TransactionalOptions,
-  TransactionManager
-} from '../../../../../src'
+import { Transactional, TransactionalOptions, TransactionManager } from '../../../../../src'
 import { InvalidDataSourceError } from '../../../../../src/errors'
 import { TypeormHandler } from '../../../../../src/handlers'
 import { HandlerArgs } from '../../../../../src/interfaces'
