@@ -3,13 +3,13 @@ import 'reflect-metadata'
 import { createMock } from 'ts-auto-mock'
 import { DataSource, DataSourceOptions } from 'typeorm'
 import {
-  HandlerArgs,
-  InvalidDataSourceError,
   Transactional,
   TransactionalOptions,
-  TransactionManager,
-  TypeormHandler
-} from '../../../../../src/TransactionManager'
+  TransactionManager
+} from '../../../../../src'
+import { InvalidDataSourceError } from '../../../../../src/errors'
+import { TypeormHandler } from '../../../../../src/handlers'
+import { HandlerArgs } from '../../../../../src/interfaces'
 jest.mock('typeorm', () => {
   const mockClass: jest.MockedClass<any> = jest.fn((...args) => {
     const instance = Object.create(DataSource.prototype)

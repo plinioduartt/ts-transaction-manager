@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+		"declaration": true,
+		"types": ["node", "jest"],
     "target": "es2016",
     "module": "commonjs",
     "esModuleInterop": true,

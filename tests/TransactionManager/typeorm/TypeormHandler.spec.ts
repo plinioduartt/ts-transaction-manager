@@ -1,4 +1,5 @@
-import { HandlerArgs, IOrmHandler, TypeormHandler } from 'src/TransactionManager'
+import { TypeormHandler } from '../../../src/handlers'
+import { HandlerArgs, IOrmHandler } from '../../../src/interfaces'
 import { createMock } from 'ts-auto-mock'
 import { DataSource, QueryRunner } from 'typeorm'
 
