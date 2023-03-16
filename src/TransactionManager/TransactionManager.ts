@@ -31,7 +31,7 @@ export class TransactionManager implements ITransactionManager {
     this._defaultDataSource = defaultDataSource
   }
 
-  get defaultDataSource(): GenericDataSource {
+  public getDefaultDataSource(): GenericDataSource {
     return this._defaultDataSource
   }
 

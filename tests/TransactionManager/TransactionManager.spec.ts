@@ -1,5 +1,10 @@
 import 'reflect-metadata'
-import { GenericDataSource, ITransactionManager, TransactionManager, InvalidDataSourceError } from '../../src/TransactionManager'
+import {
+  GenericDataSource,
+  ITransactionManager,
+  TransactionManager,
+  InvalidDataSourceError
+} from '../../src/TransactionManager'
 import { DataSource, DataSourceOptions } from 'typeorm'
 import { createMock } from 'ts-auto-mock'
 jest.mock('typeorm', () => {
@@ -24,8 +29,11 @@ describe('TransactionManager', () => {
   test('Add unique data sources', () => {
     // arrange
     const sut: TransactionManager = Reflect.construct(TransactionManager, [])
-    const spyAddDataSource: jest.SpyInstance<ITransactionManager, [dataSource: DataSource], any> =
-			jest.spyOn(sut, 'addDataSource')
+    const spyAddDataSource: jest.SpyInstance<
+    Pick<ITransactionManager, 'addDataSource' | 'setDefaultDataSource'>,
+    [dataSource: DataSource],
+    any
+    > = jest.spyOn(sut, 'addDataSource')
 
     // act
     sut
@@ -44,9 +52,7 @@ describe('TransactionManager', () => {
     const spySetDefaultDataSource = jest.spyOn(sut, 'setDefaultDataSource')
 
     // act
-    sut
-      .addDataSource(mockedTypeormDataSource)
-      .setDefaultDataSource(mockedTypeormDataSource)
+    sut.addDataSource(mockedTypeormDataSource).setDefaultDataSource(mockedTypeormDataSource)
 
     // assert
     expect(sut.dataSources.length).toBe(1)
@@ -60,9 +66,8 @@ describe('TransactionManager', () => {
     const mockedInvalidDataSource: any = createMock<any>()
 
     // act
-    const action = (): void => sut
-      .addDataSource(mockedTypeormDataSource)
-      .setDefaultDataSource(mockedInvalidDataSource)
+    const action = (): void =>
+      sut.addDataSource(mockedTypeormDataSource).setDefaultDataSource(mockedInvalidDataSource)
 
     // assert
     expect(() => action()).toThrow(
@@ -76,12 +81,10 @@ describe('TransactionManager', () => {
   test('Get default data source', () => {
     // arrange
     const sut: TransactionManager = Reflect.construct(TransactionManager, [])
-    sut
-      .addDataSource(mockedTypeormDataSource)
-      .setDefaultDataSource(mockedTypeormDataSource)
+    sut.addDataSource(mockedTypeormDataSource).setDefaultDataSource(mockedTypeormDataSource)
 
     // act
-    const defaultDataSource: GenericDataSource = sut.defaultDataSource
+    const defaultDataSource: GenericDataSource = sut.getDefaultDataSource()
 
     // assert
     expect(defaultDataSource).toBe(mockedTypeormDataSource)
@@ -91,10 +94,10 @@ describe('TransactionManager', () => {
     // arrange
     const sut: TransactionManager = Reflect.construct(TransactionManager, [])
     const mockedOptions: DataSourceOptions = createMock<DataSourceOptions>()
-    const test: DataSource = new DataSource(mockedOptions)
+    const mockedTypeormDataSource: DataSource = new DataSource(mockedOptions)
 
     // act
-    const isTypeormDataSource: boolean = sut.isTypeormDataSource(test)
+    const isTypeormDataSource: boolean = sut.isTypeormDataSource(mockedTypeormDataSource)
 
     // assert
     expect(isTypeormDataSource).toBeTruthy()
@@ -106,9 +109,7 @@ describe('TransactionManager', () => {
     const instanceTwo: TransactionManager = TransactionManager.getInstance()
 
     // act
-    instanceOne
-      .addDataSource(mockedTypeormDataSource)
-      .setDefaultDataSource(mockedTypeormDataSource)
+    instanceOne.addDataSource(mockedTypeormDataSource).setDefaultDataSource(mockedTypeormDataSource)
 
     // assert
     expect(instanceTwo.dataSources.length).toBe(1)

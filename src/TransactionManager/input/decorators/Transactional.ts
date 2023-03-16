@@ -1,5 +1,5 @@
-import { InvalidDataSourceError } from '../../../TransactionManager/errors'
-import { TypeormHandler } from '../../../TransactionManager/handlers'
+import { InvalidDataSourceError } from '../../errors'
+import { TypeormHandler } from '../../handlers'
 import { HandlerArgs } from '../../interfaces/IOrmHandler'
 import {
   AvailableDataSources,
@@ -11,7 +11,7 @@ import pino, { DestinationStream, Logger, LoggerOptions } from 'pino'
 import pretty from 'pino-pretty'
 
 export interface TransactionalOptions {
-  dataSource: Exclude<DataSourceTypes, undefined>
+  dataSource?: Exclude<DataSourceTypes, undefined>
   logging?: boolean
 }
 
@@ -41,13 +41,16 @@ export function Transactional(options?: TransactionalOptions): MethodDecorator {
 
     const originalMethod: any = descriptor.value
     descriptor.value = async function (...args: any) {
-      const dataSource: GenericDataSource = options?.dataSource
-        ? TransactionManager.getInstance().dataSources.find(
-          item => item instanceof AvailableDataSources[options.dataSource].constructor
-        )
-        : TransactionManager.getInstance().defaultDataSource
+      let dataSource: GenericDataSource = TransactionManager.getInstance().getDefaultDataSource()
 
-      if (dataSource == null) {
+      if (options?.dataSource) {
+        const specificDataSource: Exclude<DataSourceTypes, undefined> = options.dataSource
+        dataSource = TransactionManager.getInstance().dataSources.find(
+          item => item instanceof AvailableDataSources[specificDataSource].constructor
+        )
+      }
+
+      if (!dataSource) {
         throw new InvalidDataSourceError(
           `[${
             target.constructor.name as string
