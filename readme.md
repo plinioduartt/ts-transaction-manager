@@ -1,4 +1,4 @@
-# **Transaction Manager for Typescript**
+# **Transaction Manager with Typescript Decorators**
 <br/>
 
 ## **Supported ORMs:**
