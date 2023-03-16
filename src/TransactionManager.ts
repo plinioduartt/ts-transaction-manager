@@ -12,7 +12,8 @@ export class TransactionManager implements ITransactionManager {
   public addDataSource(
     dataSource: Exclude<GenericDataSource, undefined>
   ): Pick<ITransactionManager, 'addDataSource' | 'setDefaultDataSource'> {
-    if (this.dataSources.map(item => item instanceof dataSource.constructor).length > 0) {
+    const dataSourceAlreadyExists: GenericDataSource = this.dataSources.find(item => item instanceof dataSource.constructor)
+    if (dataSourceAlreadyExists) {
       return this
     }
     this.dataSources.push(dataSource)
