@@ -1,13 +1,15 @@
 # **Transaction Manager with Typescript Decorators**
-<br/>
+📚 Abstracted transaction control for Typescript decorators, to facilitate transaction management and make the code cleaner.
+
+<br>
 
 ## **Supported ORMs:**
 - Typeorm
-<br/>
-<br/>
+
+<br>
 
 ## **Quickstart**
-<br/>
+<br>
 
 Configuration:
 ```

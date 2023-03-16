@@ -1,6 +1,6 @@
 {
   "name": "@plinioduartt/ts-transaction-manager",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-		"build": "tsup src --format cjs,esm --dts",
+    "build": "tsup src --format cjs,esm --dts",
     "build:backup": "rimraf ./dist && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc --outDir dist/esm",
     "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
