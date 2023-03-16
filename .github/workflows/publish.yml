@@ -16,8 +16,6 @@ jobs:
           registry-url: https://registry.npmjs.org
       - run: npm install
       - run: npm run test:coverage
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
       - name: 🚀 publish
         run: npm publish --access public
         working-directory: .

@@ -1,7 +1,10 @@
 # **Transaction Manager with Typescript Decorators**
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/plinioduartt/ts-transaction-manager/publish.yml)
 
 📚 Abstracted transaction control for Typescript decorators, to facilitate transaction management and make the code cleaner.
+
+<br>
+
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/plinioduartt/ts-transaction-manager/publish.yml)
 
 <br>
 
