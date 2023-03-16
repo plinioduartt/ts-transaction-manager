@@ -1,4 +1,6 @@
 # **Transaction Manager with Typescript Decorators**
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/plinioduartt/ts-transaction-manager/publish.yml)
+
 📚 Abstracted transaction control for Typescript decorators, to facilitate transaction management and make the code cleaner.
 
 <br>
@@ -11,7 +13,7 @@
 ## **Quickstart**
 <br>
 
-Configuration:
+**Configuration:**
 ```
 import { DataSource } from 'typeorm'
 import { TransactionManager } from '@plinioduartt/ts-transaction-manager'
@@ -29,7 +31,7 @@ TransactionManager
 ```
 <br>
 
-Example of use:
+**Example of use:**
 ```
 import { Transactional } from '@plinioduartt/ts-transaction-manager'
 
@@ -44,7 +46,7 @@ class Example1 {
 ```
 <br>
 
-The arguments are optionals:
+**The arguments are optionals:**
 ```
 TransactionalOptions {
   dataSource?: Exclude<DataSourceTypes, undefined>
@@ -56,7 +58,7 @@ In the future, it'll be available with more options for dataSource configuration
 ```
 <br>
 
-If you pass logging: true, then you'll see logs like that:
+**If you pass logging: true, then you'll see logs like that:**
 ```
 [01:21:05.906] INFO: [OrderUsecase][executeWithSuccess] is being intercepted by Transaction decorator...
 [01:21:05.914] INFO: [OrderUsecase][executeWithFailure] is being intercepted by Transaction decorator...
