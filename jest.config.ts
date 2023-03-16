@@ -5,6 +5,11 @@ const config: Config.InitialOptions = {
   bail: 0,
   preset: 'ts-jest',
   collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+  coverageReporters: [
+    'json-summary',
+    'text',
+    'lcov'
+  ],
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: [],
   verbose: true,

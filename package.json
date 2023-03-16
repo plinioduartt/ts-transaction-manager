@@ -21,7 +21,8 @@
     "test:coverage": "jest --coverage",
     "test:staged": "npm test -- --findRelatedTests --watchAll=false",
     "test:pre-push": "npm test -- --silent --coverage",
-    "validate": "npm run format && npm run lint && npm run test:pre-push"
+    "validate": "npm run format && npm run lint && npm run test:pre-push",
+		"test:badges": "npm run test:coverage && jest-coverage-badges"
   },
   "repository": {
     "type": "git",
@@ -53,6 +54,7 @@
     "git-commit-msg-linter": "^3.2.8",
     "husky": "^4.3.8",
     "jest": "^28.1.3",
+    "jest-coverage-badges": "^1.1.2",
     "jest-ts-auto-mock": "^2.1.0",
     "lint-staged": "^12.4.1",
     "prettier": "^2.8.4",

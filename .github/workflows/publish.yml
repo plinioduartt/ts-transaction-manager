@@ -1,8 +1,7 @@
 name: "🚀 publish"
 on:
   push:
-    branches:
-      -	master
+    branches: [master]
 jobs:
   release:
     name: 🚀 publish
@@ -15,6 +14,7 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org
+      - run: npm run test:badges
       - name: 🚀 publish
         run: npm publish --access public
         working-directory: ts-transaction-manager
