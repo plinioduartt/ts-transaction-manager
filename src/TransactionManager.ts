@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm'
 import { InvalidDataSourceError } from './errors'
-import { GenericDataSource, ITransactionManager } from './interfaces/ITransactionalManager'
+import { GenericDataSource, ITransactionManager } from './Interfaces'
 
 export class TransactionManager implements ITransactionManager {
   public readonly dataSources: GenericDataSource[] = []
@@ -12,7 +12,9 @@ export class TransactionManager implements ITransactionManager {
   public addDataSource(
     dataSource: Exclude<GenericDataSource, undefined>
   ): Pick<ITransactionManager, 'addDataSource' | 'setDefaultDataSource'> {
-    const dataSourceAlreadyExists: GenericDataSource = this.dataSources.find(item => item instanceof dataSource.constructor)
+    const dataSourceAlreadyExists: GenericDataSource = this.dataSources.find(
+      item => item instanceof dataSource.constructor
+    )
     if (dataSourceAlreadyExists) {
       return this
     }

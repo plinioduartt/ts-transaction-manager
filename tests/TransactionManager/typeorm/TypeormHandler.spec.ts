@@ -1,7 +1,7 @@
-import { TypeormHandler } from '../../../src/handlers'
-import { HandlerArgs, IOrmHandler } from '../../../src/interfaces'
 import { createMock } from 'ts-auto-mock'
 import { DataSource, QueryRunner } from 'typeorm'
+import { IOrmHandler, OrmHandlerOptions } from '../../../src'
+import { TypeormHandler } from '../../../src/handlers'
 
 describe('Typeorm handler', () => {
   const sut: IOrmHandler = new TypeormHandler()
@@ -23,7 +23,7 @@ describe('Typeorm handler', () => {
 
   test('Transaction commit', async () => {
     // arrange
-    const args: HandlerArgs = createMock<HandlerArgs>({
+    const args: OrmHandlerOptions = createMock<OrmHandlerOptions>({
       dataSource: mockedDataSource,
       target: MockedTestingClass.prototype,
       propertyKey: 'methodToTest'
@@ -46,7 +46,7 @@ describe('Typeorm handler', () => {
 
   test('Transaction rollback', async () => {
     // arrange
-    const args: HandlerArgs = createMock<HandlerArgs>({
+    const args: OrmHandlerOptions = createMock<OrmHandlerOptions>({
       dataSource: mockedDataSource,
       target: MockedTestingClass.prototype,
       propertyKey: 'methodToTest'

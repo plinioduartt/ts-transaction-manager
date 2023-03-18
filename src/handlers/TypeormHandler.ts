@@ -1,5 +1,5 @@
+import { IOrmHandler, OrmHandlerOptions } from '../../src/Interfaces'
 import { QueryRunner } from 'typeorm'
-import { HandlerArgs, IOrmHandler } from '../interfaces/IOrmHandler'
 
 export class TypeormHandler implements IOrmHandler {
   async handle({
@@ -10,7 +10,7 @@ export class TypeormHandler implements IOrmHandler {
     args,
     context,
     logger
-  }: HandlerArgs): Promise<unknown> {
+  }: OrmHandlerOptions): Promise<unknown> {
     const manager: QueryRunner = dataSource.createQueryRunner()
     await manager.connect()
     await manager.startTransaction()

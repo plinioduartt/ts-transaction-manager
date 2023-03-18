@@ -1,9 +1,8 @@
 import 'reflect-metadata'
-import { TransactionManager } from '../../src'
-import { DataSource, DataSourceOptions } from 'typeorm'
 import { createMock } from 'ts-auto-mock'
+import { DataSource, DataSourceOptions } from 'typeorm'
+import { GenericDataSource, ITransactionManager, TransactionManager } from '../../src'
 import { InvalidDataSourceError } from '../../src/errors'
-import { GenericDataSource, ITransactionManager } from '../../src/interfaces'
 jest.mock('typeorm', () => {
   const mockClass: jest.MockedClass<any> = jest.fn((...args: any) => {
     const instance = Object.create(DataSource.prototype)

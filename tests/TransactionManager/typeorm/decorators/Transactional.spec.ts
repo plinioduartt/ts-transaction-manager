@@ -2,10 +2,9 @@
 import 'reflect-metadata'
 import { createMock } from 'ts-auto-mock'
 import { DataSource, DataSourceOptions } from 'typeorm'
-import { Transactional, TransactionalOptions, TransactionManager } from '../../../../../src'
-import { InvalidDataSourceError } from '../../../../../src/errors'
-import { TypeormHandler } from '../../../../../src/handlers'
-import { HandlerArgs } from '../../../../../src/interfaces'
+import { OrmHandlerOptions, Transactional, TransactionalOptions, TransactionManager } from '../../../../src'
+import { InvalidDataSourceError } from '../../../../src/errors'
+import { TypeormHandler } from '../../../../src/handlers'
 jest.mock('typeorm', () => {
   const mockClass: jest.MockedClass<any> = jest.fn((...args) => {
     const instance = Object.create(DataSource.prototype)
@@ -19,7 +18,7 @@ jest.mock('typeorm', () => {
 })
 
 describe('Transactional decorator with typeorm data source', () => {
-  const spyTypeormHandler: jest.SpyInstance<Promise<unknown>, [HandlerArgs], any> = jest.spyOn(
+  const spyTypeormHandler: jest.SpyInstance<Promise<unknown>, [OrmHandlerOptions], any> = jest.spyOn(
     TypeormHandler.prototype,
     'handle'
   )

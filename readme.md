@@ -13,7 +13,16 @@
 
 <br>
 
+## **Why to use**
+
+This is an abstract implementation to work with ORM transactions.
+
+The main objective is to facilitate the flow of implementation and provide a powerfull feature, you can use the @Transactional decorator at usecases/services/adapters level without the fear of coupling the layers of your application with the ORM specific sintaxes.
+
+<br>
+
 ## **Quickstart**
+
 <br>
 
 **Configuration:**
@@ -63,8 +72,8 @@ In the future, it'll be available with more options for dataSource configuration
 
 **If you pass logging: true, then you'll see logs like that:**
 ```
-[01:21:05.906] INFO: [OrderUsecase][executeWithSuccess] is being intercepted by Transaction decorator...
-[01:21:05.914] INFO: [OrderUsecase][executeWithFailure] is being intercepted by Transaction decorator...
+[01:21:05.906] INFO: [OrderUsecase][executeWithSuccess] is being intercepted by Transactional decorator...
+[01:21:05.914] INFO: [OrderUsecase][executeWithFailure] is being intercepted by Transactional decorator...
 
 
 @Transactional({ logging: true })
@@ -84,3 +93,11 @@ async executeWithFailure(request: CreateOrderRequest): Promise<CreateOrderRespon
 [01:21:12.494] INFO: [OrderUsecase][executeWithFailure][Typeorm] transaction initialized.
 [01:21:12.526] INFO: [OrderUsecase][executeWithFailure][Typeorm] has failed. Rollback realized successfully.
 ```
+
+## **Supported ORMs**
+
+- [x] Typeorm (since v1.0.0)
+- [ ] Prisma (soon)
+- [ ] Knex (soon)
+- [ ] Mongoose (soon)
+- [ ] Sequelize (soon)

@@ -1,25 +1,21 @@
-import { InvalidDataSourceError } from '../../errors'
-import { TypeormHandler } from '../../handlers'
-import { HandlerArgs } from '../../interfaces/IOrmHandler'
-import {
-  AvailableDataSources,
-  DataSourceTypes,
-  GenericDataSource
-} from '../../interfaces/ITransactionalManager'
-import { TransactionManager } from '../../TransactionManager'
 import pino, { DestinationStream, Logger, LoggerOptions } from 'pino'
 import pretty from 'pino-pretty'
-
-export interface TransactionalOptions {
-  dataSource?: Exclude<DataSourceTypes, undefined>
-  logging?: boolean
-}
+import { AvailableDataSources } from '../../src'
+import { InvalidDataSourceError } from '../errors'
+import { TypeormHandler } from '../handlers'
+import {
+  DataSourceTypes,
+  GenericDataSource,
+  OrmHandlerOptions,
+  TransactionalOptions
+} from '../Interfaces'
+import { TransactionManager } from '../TransactionManager'
 
 /**
  * This decorator encapsulates all the method flow inside a transaction that commits in case of success and do rollback in failure cases
- * @param options With two optional parameters, dataSource and logging. If dataSource is not given, then it will use the default dataSource
- * @property dataSource
- * @property logging default = false
+ * @param options Receives two optional parameters, dataSource and logging. If dataSource is not given, then it will use the default dataSource
+ * @property dataSource ORM DataSource
+ * @property logging Default = false
  * @returns
  */
 export function Transactional(options?: TransactionalOptions): MethodDecorator {
@@ -36,7 +32,7 @@ export function Transactional(options?: TransactionalOptions): MethodDecorator {
     logger.info(
       `[${
         target.constructor.name as string
-      }][${propertyKey.toString()}] is being intercepted by Transaction decorator...`
+      }][${propertyKey.toString()}] is being intercepted by Transactional decorator...`
     )
 
     const originalMethod: any = descriptor.value
@@ -58,7 +54,7 @@ export function Transactional(options?: TransactionalOptions): MethodDecorator {
         )
       }
 
-      const handlerArgs: HandlerArgs = {
+      const handlerOptions: OrmHandlerOptions = {
         dataSource,
         target,
         originalMethod,
@@ -70,7 +66,7 @@ export function Transactional(options?: TransactionalOptions): MethodDecorator {
 
       if (TransactionManager.getInstance().isTypeormDataSource(dataSource)) {
         const typeormHandler: TypeormHandler = new TypeormHandler()
-        return await typeormHandler.handle(handlerArgs)
+        return await typeormHandler.handle(handlerOptions)
       }
     }
     return descriptor
