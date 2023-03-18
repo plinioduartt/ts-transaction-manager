@@ -1,7 +1,7 @@
 {
   "name": "@plinioduartt/ts-transaction-manager",
   "version": "1.0.9",
-  "description": "",
+  "description": "📚 Abstracted transaction control for Typescript decorators, to facilitate transaction management and make the code cleaner.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -21,7 +21,7 @@
     "test:coverage": "jest --coverage",
     "test:staged": "npm test -- --findRelatedTests --watchAll=false",
     "test:pre-push": "npm test -- --silent --coverage",
-    "validate": "npm run format && npm run lint && npm run test:pre-push"
+    "validate": "npm run build && npm run format && npm run lint && npm run test:pre-push"
   },
   "repository": {
     "type": "git",

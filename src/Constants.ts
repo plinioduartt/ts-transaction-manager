@@ -6,7 +6,7 @@ import { DataSourceTypes, GenericDataSource } from './Interfaces'
  */
 export const AvailableDataSources = {
   /**
-	 * The key and the prototype identification for TypeOrm implementation
-	 */
+   * The key and the prototype identification for TypeOrm implementation
+   */
   typeorm: DataSource.prototype
 } satisfies Record<DataSourceTypes, Exclude<GenericDataSource, undefined>>
