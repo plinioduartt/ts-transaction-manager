@@ -1,6 +1,6 @@
 {
   "name": "@plinioduartt/ts-transaction-manager",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "📚 Abstracted transaction control for Typescript decorators, to facilitate transaction management and make the code cleaner.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
