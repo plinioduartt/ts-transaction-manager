@@ -4,7 +4,8 @@
 
 <br>
 
-[![🚀 publish](https://github.com/plinioduartt/ts-transaction-manager/actions/workflows/publish.yml/badge.svg)](https://github.com/plinioduartt/ts-transaction-manager/actions/workflows/publish.yml)
+[![tests](https://github.com/plinioduartt/ts-transaction-manager/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/plinioduartt/ts-transaction-manager/actions/workflows/tests.yml)
+[![ci](https://github.com/plinioduartt/ts-transaction-manager/actions/workflows/ci.yml/badge.svg)](https://github.com/plinioduartt/ts-transaction-manager/actions/workflows/ci.yml)
 
 <br>
 

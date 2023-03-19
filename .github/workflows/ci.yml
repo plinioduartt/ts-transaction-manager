@@ -1,4 +1,4 @@
-name: "🚀 publish"
+name: "ci"
 on:
   workflow_run:
     workflows: [tests]
@@ -6,7 +6,7 @@ on:
       - completed
 jobs:
   release:
-    name: 🚀 publish
+    name: ci
     runs-on: ubuntu-latest
     steps:
       - name: 📚 checkout
@@ -19,7 +19,7 @@ jobs:
       - run: npm install
       - run: npm run test:coverage
       - run: npm run build
-      - name: 🚀 publish
+      - name: ci
         run: npm publish --access public
         working-directory: .
         env:
