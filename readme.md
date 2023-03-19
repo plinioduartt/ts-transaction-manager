@@ -4,7 +4,7 @@
 
 <br>
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/plinioduartt/ts-transaction-manager/publish.yml)
+[![🚀 publish](https://github.com/plinioduartt/ts-transaction-manager/actions/workflows/publish.yml/badge.svg)](https://github.com/plinioduartt/ts-transaction-manager/actions/workflows/publish.yml)
 
 <br>
 
