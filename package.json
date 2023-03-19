@@ -8,9 +8,6 @@
   "files": [
     "dist"
   ],
-	"publishConfig": {
-		"@plinioduartt:registry": "https://npm.pkg.github.com"
-	},
   "scripts": {
     "build": "tsup src --format cjs,esm --dts",
     "build:backup": "rimraf ./dist && npm run build:esm && npm run build:cjs",
