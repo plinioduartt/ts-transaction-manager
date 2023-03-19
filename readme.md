@@ -8,8 +8,13 @@
 
 <br>
 
-## **Supported ORMs:**
-- Typeorm
+## **Supported ORMs**
+
+- [x] Typeorm (since v1.0.0)
+- [ ] Prisma (soon)
+- [ ] Knex (soon)
+- [ ] Mongoose (soon)
+- [ ] Sequelize (soon)
 
 <br>
 
@@ -17,7 +22,7 @@
 
 This is an abstract implementation to work with ORM transactions.
 
-The main objective is to facilitate the flow of implementation and provide a powerfull feature, you can use the @Transactional decorator at usecases/services/adapters level without the fear of coupling the layers of your application with the ORM specific sintaxes.
+The main objective is to facilitate the flow of implementation and provide a powerfull feature, you can use the @Transactional decorator at usecases/services/adapters layer without the fear of coupling the layers of your application with the ORM specific syntax.
 
 <br>
 
@@ -94,10 +99,3 @@ async executeWithFailure(request: CreateOrderRequest): Promise<CreateOrderRespon
 [01:21:12.526] INFO: [OrderUsecase][executeWithFailure][Typeorm] has failed. Rollback realized successfully.
 ```
 
-## **Supported ORMs**
-
-- [x] Typeorm (since v1.0.0)
-- [ ] Prisma (soon)
-- [ ] Knex (soon)
-- [ ] Mongoose (soon)
-- [ ] Sequelize (soon)
