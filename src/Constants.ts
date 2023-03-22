@@ -8,12 +8,12 @@ import { MainTransactionManager } from './MainTransactionManager'
  */
 export const SupportedDataSources = {
   /**
-	 * The key and the prototype identification for TypeOrm implementation
-	 */
+   * The key and the prototype identification for TypeOrm implementation
+   */
   typeorm: DataSource.prototype,
   /**
-	 * The key and the prototype identification for Knex implementation
-	 */
+   * The key and the prototype identification for Knex implementation
+   */
   knex: knex.prototype as Knex
 } satisfies Record<SupportedOrms, Exclude<GenericDataSource, undefined>>
 

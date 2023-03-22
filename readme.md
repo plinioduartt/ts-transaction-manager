@@ -12,7 +12,7 @@
 ## **Supported ORMs**
 
 - [x] Typeorm (since v1.0.0)
-- [x] Knex (soon) (since v1.0.15)
+- [x] Knex (since v1.0.15)
 - [ ] Prisma (soon)
 - [ ] Mongoose (soon)
 - [ ] Sequelize (soon)

@@ -2,15 +2,10 @@
 import 'reflect-metadata'
 import { createMock } from 'ts-auto-mock'
 import { DataSourceOptions, DataSource } from 'typeorm'
-import {
-  OrmHandlerOptions,
-  Transactional
-} from '../../../src'
+import { OrmHandlerOptions, Transactional } from '../../../src'
 import { TransactionManagerException } from '../../../src/errors'
 import { TypeormHandler } from '../../../src/handlers'
-import {
-  MainTransactionManager
-} from '../../../src/MainTransactionManager'
+import { MainTransactionManager } from '../../../src/MainTransactionManager'
 jest.mock('typeorm', () => {
   const mockClass: jest.MockedClass<any> = jest.fn((...args) => {
     const instance = Object.create(DataSource.prototype)
@@ -47,7 +42,8 @@ describe('Transactional decorator', () => {
     }
     const testingClass: MockedTestingClass = new MockedTestingClass()
     spyTypeormHandler.mockResolvedValue(expectedResult)
-    jest.spyOn(MainTransactionManager.prototype, 'getDefaultDataSource')
+    jest
+      .spyOn(MainTransactionManager.prototype, 'getDefaultDataSource')
       .mockReturnValueOnce(undefined)
 
     // act
@@ -71,10 +67,8 @@ describe('Transactional decorator', () => {
     }
     const testingClass: MockedTestingClass = new MockedTestingClass()
     spyTypeormHandler.mockResolvedValue(expectedResult)
-    jest.spyOn(MainTransactionManager.prototype, 'isTypeormDataSource')
-      .mockReturnValueOnce(false)
-    jest.spyOn(MainTransactionManager.prototype, 'isKnexDataSource')
-      .mockReturnValueOnce(false)
+    jest.spyOn(MainTransactionManager.prototype, 'isTypeormDataSource').mockReturnValueOnce(false)
+    jest.spyOn(MainTransactionManager.prototype, 'isKnexDataSource').mockReturnValueOnce(false)
 
     // act
     const request = async (): Promise<string> => await testingClass.methodToTest()

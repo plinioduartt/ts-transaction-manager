@@ -2,27 +2,18 @@
 import { Knex } from 'knex'
 import 'reflect-metadata'
 import { createMock } from 'ts-auto-mock'
-import {
-  OrmHandlerOptions,
-  Transactional,
-  TransactionalOptions
-} from '../../../../src'
+import { OrmHandlerOptions, Transactional, TransactionalOptions } from '../../../../src'
 import { KnexHandler } from '../../../../src/handlers'
-import {
-  MainTransactionManager
-} from '../../../../src/MainTransactionManager'
+import { MainTransactionManager } from '../../../../src/MainTransactionManager'
 
 describe('Transactional decorator with knex data source', () => {
-  const spyKnexHandler: jest.SpyInstance<
-  Promise<unknown>,
-  [OrmHandlerOptions],
-  any
-  > = jest.spyOn(KnexHandler.prototype, 'handle')
+  const spyKnexHandler: jest.SpyInstance<Promise<unknown>, [OrmHandlerOptions], any> = jest.spyOn(
+    KnexHandler.prototype,
+    'handle'
+  )
   const transactionManager: MainTransactionManager = MainTransactionManager.getInstance()
   const mockedDataSource: Knex = Object.create({ name: 'knex', ...createMock<Knex>() })
-  transactionManager
-    .addDataSource(mockedDataSource)
-    .setDefaultDataSource(mockedDataSource)
+  transactionManager.addDataSource(mockedDataSource).setDefaultDataSource(mockedDataSource)
   const expectedResult = 'test'
 
   afterEach(() => {

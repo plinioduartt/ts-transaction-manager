@@ -9,11 +9,14 @@ describe('Knex handler', () => {
   const mockedTransaction: Knex.Transaction = createMock<Knex.Transaction>()
   mockedTransaction.commit = jest.fn()
   mockedTransaction.rollback = jest.fn()
-  const spyTransactionManagerGetKnexTransaction: jest.SpyInstance<Promise<Knex.Transaction>, [], any> =
-		jest.spyOn(TransactionManager, 'getKnexTransaction')
+  const spyTransactionManagerGetKnexTransaction: jest.SpyInstance<
+  Promise<Knex.Transaction>,
+  [],
+  any
+  > = jest.spyOn(TransactionManager, 'getKnexTransaction')
 
   class MockedTestingClass {
-    async methodToTest(): Promise<void> { }
+    async methodToTest(): Promise<void> {}
   }
 
   afterEach(() => jest.clearAllMocks())

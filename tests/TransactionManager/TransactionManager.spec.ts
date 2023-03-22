@@ -133,11 +133,14 @@ describe('MainTransactionManager', () => {
     jest.spyOn(sut, 'getKnexTransactionProvider').mockReturnValue(undefined)
 
     // act
-    const knexTransaction = async (): Promise<Knex.Transaction | undefined> => await sut.getKnexTransaction()
+    const knexTransaction = async (): Promise<Knex.Transaction | undefined> =>
+      await sut.getKnexTransaction()
 
     // assert
     await expect(async () => await knexTransaction()).rejects.toThrow(
-      new TransactionManagerException('[TransactionManager][getKnexTransaction] Invalid knexTransactionProvider')
+      new TransactionManagerException(
+        '[TransactionManager][getKnexTransaction] Invalid knexTransactionProvider'
+      )
     )
   })
 

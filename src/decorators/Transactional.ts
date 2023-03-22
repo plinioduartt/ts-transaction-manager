@@ -30,27 +30,31 @@ export function Transactional(options?: TransactionalOptions): MethodDecorator {
 
   return function (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
     logger.info(
-			`[${target.constructor.name as string
-			}][${propertyKey.toString()}] is being intercepted by Transactional decorator...`
+      `[${
+        target.constructor.name as string
+      }][${propertyKey.toString()}] is being intercepted by Transactional decorator...`
     )
 
     const originalMethod: any = descriptor.value
     descriptor.value = async function (...args: any) {
-      let dataSource: GenericDataSource = MainTransactionManager.getInstance().getDefaultDataSource()
+      let dataSource: GenericDataSource =
+        MainTransactionManager.getInstance().getDefaultDataSource()
 
       if (options?.orm) {
         const specificDataSource: SupportedOrms = options.orm
 
         dataSource = MainTransactionManager.getInstance().dataSources.find(
-          item => item.constructor.name === SupportedDataSources[specificDataSource].constructor.name ||
-						item.name === SupportedDataSources[specificDataSource].constructor.name
+          item =>
+            item.constructor.name === SupportedDataSources[specificDataSource].constructor.name ||
+            item.name === SupportedDataSources[specificDataSource].constructor.name
         )
       }
 
       if (!dataSource) {
         throw new TransactionManagerException(
-					`[${target.constructor.name as string
-					}][${propertyKey.toString()}] Invalid or non-existent DataSource`
+          `[${
+            target.constructor.name as string
+          }][${propertyKey.toString()}] Invalid or non-existent DataSource`
         )
       }
 

@@ -9,7 +9,7 @@ export class MainTransactionManager implements ITransactionManager {
   private _defaultDataSource: GenericDataSource
   private _knexTransactionProvider: Knex.TransactionProvider | undefined
 
-  private constructor() { }
+  private constructor() {}
 
   public addDataSource(
     dataSource: Exclude<GenericDataSource, undefined>
@@ -53,15 +53,20 @@ export class MainTransactionManager implements ITransactionManager {
   }
 
   public async getKnexTransaction(): Promise<Knex.Transaction> {
-    const transactionProvider: Knex.TransactionProvider | undefined = this.getKnexTransactionProvider()
+    const transactionProvider: Knex.TransactionProvider | undefined =
+      this.getKnexTransactionProvider()
     if (!transactionProvider) {
-      throw new TransactionManagerException('[TransactionManager][getKnexTransaction] Invalid knexTransactionProvider')
+      throw new TransactionManagerException(
+        '[TransactionManager][getKnexTransaction] Invalid knexTransactionProvider'
+      )
     }
 
     return await transactionProvider()
   }
 
-  public isTypeormDataSource(dataSource: Exclude<GenericDataSource, undefined>): dataSource is DataSource {
+  public isTypeormDataSource(
+    dataSource: Exclude<GenericDataSource, undefined>
+  ): dataSource is DataSource {
     return dataSource.constructor.name === DataSource.prototype.constructor.name
   }
 
