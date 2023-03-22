@@ -1,14 +1,15 @@
-import type { DataSource } from 'typeorm'
+import { Knex } from 'knex'
 import { DestinationStream, Logger, LoggerOptions } from 'pino'
+import type { DataSource } from 'typeorm'
 
 /**
  * All the ORMs supported by the lib
  */
-export type DataSourceTypes = 'typeorm'
+export type SupportedOrms = 'typeorm' | 'knex'
 /**
  * All the DataSources typings from ORMs
  */
-export type GenericDataSource = DataSource | undefined
+export type GenericDataSource = DataSource | Knex | undefined
 /**
  * Interface for Transaction Manager main class, that encapsulates all the initialization and data sources management logic
  */
@@ -32,6 +33,16 @@ export interface ITransactionManager {
    * @returns GenericDataSource
    */
   getDefaultDataSource: () => GenericDataSource
+  /**
+   * This method returns a initialized Knex transactionProvider
+   * @returns
+   */
+  getKnexTransactionProvider: () => Knex.TransactionProvider | undefined
+  /**
+   * This method returns a Knex transaction from a shared Knex provider
+   * @returns
+   */
+  getKnexTransaction: () => Promise<Knex.Transaction>
 }
 /**
  * Interface for OrmHandler class method arguments
@@ -83,10 +94,16 @@ export interface IOrmHandler {
 export interface TransactionalOptions {
   /**
    * A string that identifies a specific initilized DataSource at Transaction Manager class
+   * @deprecated **Since v1.0.15**. You should use property **orm** instead **dataSource**
    */
-  dataSource?: Exclude<DataSourceTypes, undefined>
+  dataSource?: SupportedOrms
   /**
-   * Flag to identify if the Decorator needs to log the results
+   * A string that identifies a specific initilized DataSource at Transaction Manager class
+   */
+  orm: SupportedOrms
+  /**
+   * Optional flag to identify if the Decorator needs to log the results.
+   * @defaults true
    */
   logging?: boolean
 }

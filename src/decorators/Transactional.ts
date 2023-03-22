@@ -1,15 +1,15 @@
 import pino, { DestinationStream, Logger, LoggerOptions } from 'pino'
 import pretty from 'pino-pretty'
-import { AvailableDataSources } from '../../src'
-import { InvalidDataSourceError } from '../errors'
-import { TypeormHandler } from '../handlers'
+import { SupportedDataSources } from '../../src'
+import { TransactionManagerException } from '../errors'
+import { KnexHandler, TypeormHandler } from '../handlers'
 import {
-  DataSourceTypes,
+  SupportedOrms,
   GenericDataSource,
   OrmHandlerOptions,
   TransactionalOptions
 } from '../Interfaces'
-import { TransactionManager } from '../TransactionManager'
+import { MainTransactionManager } from '../MainTransactionManager'
 
 /**
  * This decorator encapsulates all the method flow inside a transaction that commits in case of success and do rollback in failure cases
@@ -37,17 +37,21 @@ export function Transactional(options?: TransactionalOptions): MethodDecorator {
 
     const originalMethod: any = descriptor.value
     descriptor.value = async function (...args: any) {
-      let dataSource: GenericDataSource = TransactionManager.getInstance().getDefaultDataSource()
+      let dataSource: GenericDataSource =
+        MainTransactionManager.getInstance().getDefaultDataSource()
 
-      if (options?.dataSource) {
-        const specificDataSource: Exclude<DataSourceTypes, undefined> = options.dataSource
-        dataSource = TransactionManager.getInstance().dataSources.find(
-          item => item instanceof AvailableDataSources[specificDataSource].constructor
+      if (options?.orm) {
+        const specificDataSource: SupportedOrms = options.orm
+
+        dataSource = MainTransactionManager.getInstance().dataSources.find(
+          item =>
+            item.constructor.name === SupportedDataSources[specificDataSource].constructor.name ||
+            item.name === SupportedDataSources[specificDataSource].constructor.name
         )
       }
 
       if (!dataSource) {
-        throw new InvalidDataSourceError(
+        throw new TransactionManagerException(
           `[${
             target.constructor.name as string
           }][${propertyKey.toString()}] Invalid or non-existent DataSource`
@@ -64,10 +68,20 @@ export function Transactional(options?: TransactionalOptions): MethodDecorator {
         logger
       }
 
-      if (TransactionManager.getInstance().isTypeormDataSource(dataSource)) {
+      if (MainTransactionManager.getInstance().isTypeormDataSource(dataSource)) {
+        handlerOptions.dataSource = dataSource
         const typeormHandler: TypeormHandler = new TypeormHandler()
         return await typeormHandler.handle(handlerOptions)
       }
+
+      if (MainTransactionManager.getInstance().isKnexDataSource(dataSource)) {
+        const knexHandler: KnexHandler = new KnexHandler()
+        return await knexHandler.handle(handlerOptions)
+      }
+
+      throw new TransactionManagerException(
+        '[Transactional][ChooseHandler] Invalid or non-existent DataSource'
+      )
     }
     return descriptor
   }

@@ -1,34 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { Knex } from 'knex'
 import 'reflect-metadata'
 import { createMock } from 'ts-auto-mock'
-import { DataSource, DataSourceOptions } from 'typeorm'
 import { OrmHandlerOptions, Transactional, TransactionalOptions } from '../../../../src'
-import { TypeormHandler } from '../../../../src/handlers'
+import { KnexHandler } from '../../../../src/handlers'
 import { MainTransactionManager } from '../../../../src/MainTransactionManager'
-jest.mock('typeorm', () => {
-  const mockClass: jest.MockedClass<any> = jest.fn((...args) => {
-    const instance = Object.create(DataSource.prototype)
 
-    return Object.assign(instance, { args })
-  })
-
-  return {
-    DataSource: mockClass
-  }
-})
-
-describe('Transactional decorator with typeorm data source', () => {
-  const spyTypeormHandler: jest.SpyInstance<
-  Promise<unknown>,
-  [OrmHandlerOptions],
-  any
-  > = jest.spyOn(TypeormHandler.prototype, 'handle')
+describe('Transactional decorator with knex data source', () => {
+  const spyKnexHandler: jest.SpyInstance<Promise<unknown>, [OrmHandlerOptions], any> = jest.spyOn(
+    KnexHandler.prototype,
+    'handle'
+  )
   const transactionManager: MainTransactionManager = MainTransactionManager.getInstance()
-  const mockedOptions: DataSourceOptions = createMock<DataSourceOptions>()
-  const mockedTypeormDataSource: DataSource = new DataSource(mockedOptions)
-  transactionManager
-    .addDataSource(mockedTypeormDataSource)
-    .setDefaultDataSource(mockedTypeormDataSource)
+  const mockedDataSource: Knex = Object.create({ name: 'knex', ...createMock<Knex>() })
+  transactionManager.addDataSource(mockedDataSource).setDefaultDataSource(mockedDataSource)
   const expectedResult = 'test'
 
   afterEach(() => {
@@ -39,7 +24,7 @@ describe('Transactional decorator with typeorm data source', () => {
     undefined as unknown as TransactionalOptions,
     {} as unknown as TransactionalOptions,
     { logging: true } as unknown as TransactionalOptions,
-    { orm: 'typeorm' }
+    { orm: 'knex' }
   ]
 
   test.each(optionsCases)(
@@ -53,16 +38,16 @@ describe('Transactional decorator with typeorm data source', () => {
         }
       }
       const testingClass: MockedTestingClass = new MockedTestingClass()
-      spyTypeormHandler.mockResolvedValue(expectedResult)
+      spyKnexHandler.mockResolvedValue(expectedResult)
 
       // act
       const result: string = await testingClass.methodToTest()
 
       // assert
-      expect(spyTypeormHandler).toBeCalledTimes(1)
-      expect(spyTypeormHandler).toBeCalledWith(
+      expect(spyKnexHandler).toBeCalledTimes(1)
+      expect(spyKnexHandler).toBeCalledWith(
         expect.objectContaining({
-          dataSource: mockedTypeormDataSource,
+          dataSource: mockedDataSource,
           target: MockedTestingClass.prototype,
           originalMethod: expect.any(Function),
           propertyKey: 'methodToTest',

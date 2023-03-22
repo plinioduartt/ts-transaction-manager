@@ -12,8 +12,8 @@
 ## **Supported ORMs**
 
 - [x] Typeorm (since v1.0.0)
+- [x] Knex (since v1.0.15)
 - [ ] Prisma (soon)
-- [ ] Knex (soon)
 - [ ] Mongoose (soon)
 - [ ] Sequelize (soon)
 
@@ -32,24 +32,40 @@ The main objective is to facilitate the flow of implementation and provide a pow
 <br>
 
 **Configuration:**
+- With TypeOrm
 ```
 import { DataSource } from 'typeorm'
 import { TransactionManager } from '@plinioduartt/ts-transaction-manager'
 
-const dataSource = new DataSource({
+const dataSource: DataSource = new DataSource({
 	...options
 })
 
 dataSource.initialize()
 
 TransactionManager
-	.getInstance()
+	.addDataSource(dataSource)
+	.setDefaultDataSource(dataSource)
+```
+- With Knex
+```
+mport knex, { Knex } from 'knex'
+import { TransactionManager } from '@plinioduartt/ts-transaction-manager'
+
+const dataSource: Knex = knex({
+	...options
+})
+
+dataSource.initialize()
+
+TransactionManager
 	.addDataSource(dataSource)
 	.setDefaultDataSource(dataSource)
 ```
 <br>
 
 **Example of use:**
+- With TypeOrm
 ```
 import { Transactional } from '@plinioduartt/ts-transaction-manager'
 
@@ -57,21 +73,40 @@ class Example1 {
 
 	@Transactional()
 	methodToBeCalled() {
-		// all the database actions here are encapsulated
-		   by typeorm transaction...
+		// all the database actions here are encapsulated by typeorm transaction...
+		// you can do the database operations here or pass it to whatever other layer
 	}
 }
 ```
+- With Knex
+```
+import { TransactionManager, Transactional } from '@plinioduartt/ts-transaction-manager'
+
+class Example1 {
+
+	@Transactional()
+	methodToBeCalled() {
+		// all the database actions here are encapsulated by knex transaction...
+		// you can do the database operations here or pass it to whatever other layer
+
+		const transaction: Knex.Transaction = await TransactionManager.getKnexTransaction()
+
+		await knex('table_name').insert(data).transacting(transaction)
+	}
+}
+```
+*Obs: You'll need to remember to always retrieve the transaction from TransactionManager.getKnexTransaction() and pass inside .transacting() method
+
 <br>
 
 **The arguments are optionals:**
 ```
 TransactionalOptions {
-  dataSource?: Exclude<DataSourceTypes, undefined>
+  orm?: SupportedOrms
   logging?: boolean
 }
 
-*Consider DataSourceTypes = 'typeorm'.
+*Consider SupportedOrms = 'typeorm' | 'knex'.
 In the future, it'll be available with more options for dataSource configuration.
 ```
 <br>
@@ -82,7 +117,7 @@ In the future, it'll be available with more options for dataSource configuration
 [01:21:05.914] INFO: [OrderUsecase][executeWithFailure] is being intercepted by Transactional decorator...
 
 
-@Transactional({ logging: true })
+@Transactional({ orm: 'typeorm', logging: true })
 async executeWithSuccess(request: CreateOrderRequest): Promise<CreateOrderResponse> {
 	// Logic with success
 }
@@ -91,7 +126,7 @@ async executeWithSuccess(request: CreateOrderRequest): Promise<CreateOrderRespon
 [01:23:29.463] INFO: [OrderUsecase][executeWithSuccess][Typeorm] transaction completed successfully.
 
 
-@Transactional({ logging: true })
+@Transactional({ orm: 'typeorm', logging: true })
 async executeWithFailure(request: CreateOrderRequest): Promise<CreateOrderResponse> {
 	// Logic with failure
 }
