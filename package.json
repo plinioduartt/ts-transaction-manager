@@ -31,6 +31,7 @@
     "transaction",
     "transactions",
     "typeorm",
+		"knex",
     "node",
     "typescript"
   ],

@@ -1,5 +1,5 @@
 import { Knex } from 'knex'
-import { TransactionManager } from '../TransactionManager'
+import { MainTransactionManager } from '../MainTransactionManager'
 import { IOrmHandler, OrmHandlerOptions } from '../../src/Interfaces'
 
 export class KnexHandler implements IOrmHandler {
@@ -11,7 +11,7 @@ export class KnexHandler implements IOrmHandler {
     context,
     logger
   }: OrmHandlerOptions): Promise<unknown> {
-    const trx: Knex.Transaction<any, any[]> = await TransactionManager.getInstance().getKnexTransaction()
+    const trx: Knex.Transaction<any, any[]> = await MainTransactionManager.getInstance().getKnexTransaction()
 
     logger.info(
       `[${

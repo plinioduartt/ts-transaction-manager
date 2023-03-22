@@ -34,6 +34,11 @@ export interface ITransactionManager {
 	 */
   getDefaultDataSource: () => GenericDataSource
   /**
+	* This method returns a initialized Knex transactionProvider
+	* @returns
+	*/
+  getKnexTransactionProvider: () => Knex.TransactionProvider | undefined
+  /**
 	 * This method returns a Knex transaction from a shared Knex provider
 	 * @returns
 	 */

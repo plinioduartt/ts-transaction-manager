@@ -3,10 +3,10 @@ import { DataSource } from 'typeorm'
 import { TransactionManagerException } from './errors'
 import { GenericDataSource, ITransactionManager } from './Interfaces'
 
-export class TransactionManager implements ITransactionManager {
-  public readonly dataSources: GenericDataSource[] = []
+export class MainTransactionManager implements ITransactionManager {
+  private static _instance: MainTransactionManager | undefined
+  public readonly dataSources: Array<Exclude<GenericDataSource, undefined>> = []
   private _defaultDataSource: GenericDataSource
-  private static _instance: TransactionManager | undefined
   private _knexTransactionProvider: Knex.TransactionProvider | undefined
 
   private constructor() { }
@@ -41,27 +41,32 @@ export class TransactionManager implements ITransactionManager {
     return this._defaultDataSource
   }
 
-  public static getInstance(): TransactionManager {
-    if (!TransactionManager._instance) {
-      TransactionManager._instance = new TransactionManager()
+  public static getInstance(): MainTransactionManager {
+    if (!MainTransactionManager._instance) {
+      MainTransactionManager._instance = new MainTransactionManager()
     }
-    return TransactionManager._instance
+    return MainTransactionManager._instance
+  }
+
+  public getKnexTransactionProvider(): Knex.TransactionProvider | undefined {
+    return this._knexTransactionProvider
   }
 
   public async getKnexTransaction(): Promise<Knex.Transaction> {
-    if (!this._knexTransactionProvider) {
+    const transactionProvider: Knex.TransactionProvider | undefined = this.getKnexTransactionProvider()
+    if (!transactionProvider) {
       throw new TransactionManagerException('[TransactionManager][getKnexTransaction] Invalid knexTransactionProvider')
     }
 
-    return await this._knexTransactionProvider()
+    return await transactionProvider()
   }
 
-  public isTypeormDataSource(dataSource: GenericDataSource): dataSource is DataSource {
-    return dataSource?.constructor.name === DataSource.prototype.constructor.name
+  public isTypeormDataSource(dataSource: Exclude<GenericDataSource, undefined>): dataSource is DataSource {
+    return dataSource.constructor.name === DataSource.prototype.constructor.name
   }
 
-  public isKnexDataSource(dataSource: GenericDataSource): dataSource is Knex {
+  public isKnexDataSource(dataSource: Exclude<GenericDataSource, undefined>): dataSource is Knex {
     this._knexTransactionProvider = (dataSource as Knex).transactionProvider()
-    return dataSource?.name === knex.prototype.constructor.name
+    return dataSource.name === knex.prototype.constructor.name
   }
 }
