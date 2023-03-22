@@ -8,7 +8,7 @@ import {
   TransactionalOptions,
   TransactionManager
 } from '../../../../src'
-import { InvalidDataSourceError } from '../../../../src/errors'
+import { TransactionManagerException } from '../../../../src/errors'
 import { TypeormHandler } from '../../../../src/handlers'
 jest.mock('typeorm', () => {
   const mockClass: jest.MockedClass<any> = jest.fn((...args) => {
@@ -42,9 +42,9 @@ describe('Transactional decorator with typeorm data source', () => {
 
   const optionsCases: TransactionalOptions[] = [
     undefined as unknown as TransactionalOptions,
-    {},
-    { logging: true },
-    { dataSource: 'typeorm' }
+    {} as unknown as TransactionalOptions,
+    { logging: true } as unknown as TransactionalOptions,
+    { orm: 'typeorm' }
   ]
 
   test.each(optionsCases)(
@@ -97,7 +97,7 @@ describe('Transactional decorator with typeorm data source', () => {
 
     // assert
     await expect(request()).rejects.toThrow(
-      new InvalidDataSourceError(
+      new TransactionManagerException(
         '[MockedTestingClass][methodToTest] Invalid or non-existent DataSource'
       )
     )

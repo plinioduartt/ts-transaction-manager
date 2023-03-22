@@ -1,12 +1,17 @@
+import { Knex, knex } from 'knex'
 import { DataSource } from 'typeorm'
-import { DataSourceTypes, GenericDataSource } from './Interfaces'
+import { SupportedOrms, GenericDataSource } from './Interfaces'
 
 /**
- * All the available ORMs DataSources
+ * All the supported ORMs DataSources
  */
-export const AvailableDataSources = {
+export const SupportedDataSources = {
   /**
    * The key and the prototype identification for TypeOrm implementation
    */
-  typeorm: DataSource.prototype
-} satisfies Record<DataSourceTypes, Exclude<GenericDataSource, undefined>>
+  typeorm: DataSource.prototype,
+  /**
+   * The key and the prototype identification for Knex implementation
+   */
+  knex: knex.prototype as Knex
+} satisfies Record<SupportedOrms, Exclude<GenericDataSource, undefined>>

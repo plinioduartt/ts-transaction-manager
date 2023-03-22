@@ -1,5 +1,5 @@
 import { IOrmHandler, OrmHandlerOptions } from '../../src/Interfaces'
-import { QueryRunner } from 'typeorm'
+import { DataSource, QueryRunner } from 'typeorm'
 
 export class TypeormHandler implements IOrmHandler {
   async handle({
@@ -11,14 +11,14 @@ export class TypeormHandler implements IOrmHandler {
     context,
     logger
   }: OrmHandlerOptions): Promise<unknown> {
-    const manager: QueryRunner = dataSource.createQueryRunner()
+    const manager: QueryRunner = (dataSource as DataSource).createQueryRunner()
     await manager.connect()
     await manager.startTransaction()
 
     logger.info(
       `[${
         target.constructor.name as string
-      }][${propertyKey.toString()}][Typeorm] transaction initialized.`
+      }][${propertyKey.toString()}][TypeOrm] transaction initialized.`
     )
 
     try {
@@ -27,14 +27,14 @@ export class TypeormHandler implements IOrmHandler {
       logger.info(
         `[${
           target.constructor.name as string
-        }][${propertyKey.toString()}][Typeorm] transaction completed successfully.`
+        }][${propertyKey.toString()}][TypeOrm] transaction completed successfully.`
       )
       return result
     } catch (error: unknown) {
       logger.info(
         `[${
           target.constructor.name as string
-        }][${propertyKey.toString()}][Typeorm] has failed. Rollback realized successfully.`
+        }][${propertyKey.toString()}][TypeOrm] has failed. Rollback realized successfully.`
       )
       await manager.rollbackTransaction()
       throw error

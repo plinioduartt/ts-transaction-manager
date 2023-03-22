@@ -67,11 +67,11 @@ class Example1 {
 **The arguments are optionals:**
 ```
 TransactionalOptions {
-  dataSource?: Exclude<DataSourceTypes, undefined>
+  orm?: SupportedOrms
   logging?: boolean
 }
 
-*Consider DataSourceTypes = 'typeorm'.
+*Consider SupportedOrms = 'typeorm' | 'knex'.
 In the future, it'll be available with more options for dataSource configuration.
 ```
 <br>

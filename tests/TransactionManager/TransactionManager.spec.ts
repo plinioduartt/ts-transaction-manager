@@ -1,8 +1,9 @@
+import { Knex } from 'knex'
 import 'reflect-metadata'
 import { createMock } from 'ts-auto-mock'
 import { DataSource, DataSourceOptions } from 'typeorm'
 import { GenericDataSource, ITransactionManager, TransactionManager } from '../../src'
-import { InvalidDataSourceError } from '../../src/errors'
+import { TransactionManagerException } from '../../src/errors'
 jest.mock('typeorm', () => {
   const mockClass: jest.MockedClass<any> = jest.fn((...args: any) => {
     const instance = Object.create(DataSource.prototype)
@@ -27,7 +28,7 @@ describe('TransactionManager', () => {
     const sut: TransactionManager = Reflect.construct(TransactionManager, [])
     const spyAddDataSource: jest.SpyInstance<
     Pick<ITransactionManager, 'addDataSource' | 'setDefaultDataSource'>,
-    [dataSource: DataSource],
+    [dataSource: DataSource | Knex],
     any
     > = jest.spyOn(sut, 'addDataSource')
 
@@ -67,7 +68,7 @@ describe('TransactionManager', () => {
 
     // assert
     expect(() => action()).toThrow(
-      new InvalidDataSourceError(
+      new TransactionManagerException(
         '[TransactionManager][setDefaultDataSource] Invalid or non-existent DataSource'
       )
     )
