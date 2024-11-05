@@ -1,5 +1,7 @@
 # **Transaction Manager with Typescript Decorators**
 
+## **DEPRECATED** Use now with support for concurrent transactions => https://www.npmjs.com/package/typeorm-ez-transaction
+
 📚 Abstracted transaction control for Typescript decorators, to facilitate transaction management and make the code cleaner.
 
 <br>
